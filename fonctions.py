@@ -95,8 +95,11 @@ def remplir_reservoir(pourcent_capt):
     # Tant qu'elle n'arrive pas 100%, continuer de remplir le reservoir 
     if pourcent_capt < 100:
         pompe.value = True
+        return True
     else:
-        pompe.value = false
+        pompe.value = False
+        return False
+        
 
 
 #========================================== Fonctions de l'affichage ==========================================
