@@ -33,7 +33,7 @@ def boucle_principale():
         pass
         
         # Vérifie si l'humiditée des légumes est bonne
-        
+        verification_humidite()
         
         # Affichage : Entrée = temperature, niveau d'eau ; Sortie = moteur, nb d'ouverture de porte.
         affichage(temperature, pourcent_moteur)
