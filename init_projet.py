@@ -43,6 +43,7 @@ moteur.throttle = 0
 # Déclaration de la del
 Del = DigitalInOut(board.A2)
 Del.Direction = Direction.OUTPUT
+Del.value = False
 
 # Déclaration de la pompe
 pompe = DigitalInOut(board.A3)
