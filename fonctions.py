@@ -17,8 +17,8 @@ def envoisWifi(temp):
         timerWifi = time.monotonic()
 
 
-#========================================== Fonctions du buzzer ==========================================
-
+#========================================== Fonctions du buzzer (spray) ==========================================
+# Déclanche la musique de zelda.
 def music_zelda():
     melodie = [392,
             370,
@@ -32,24 +32,30 @@ def music_zelda():
     for i in range(len(melodie)):
         simpleio.tone(pin_buzzer, melodie[i], duration=0.15)
         
-
+# Vérifie si l'on doit aroser les légumes.
+def verification_humidite(humidite):
+    if humidite < 55:
+                # Arose les légumes. (buzzer pour simulation)
+                spray_legumes()
+                
+# Arose les légumes. (simuler par buzzer)
 def spray_legumes():
         simpleio.tone(pin_buzzer, 349, duration=0.15)
         
         
 #========================================== Fonctions de la porte ==========================================
 
-# Fonction qui permet d'ouvrir la porte du frigot
+# Ouvre la porte du frigot.
 def ouverture_porte():
     porte.angle = 120
+    music_zelda()
     
     
-# Fonction qui permet de fermer la porte du frigot
+# Ferme la porte du frigot.
 def fermeture_porte():
     porte.angle = 0
     
-    
-# Fonction qui controle la porte
+# Controle de la porte
 def controle_porte(porte_ouverte):
     #Transforme l'ouverture de la porte en bool
     if porte_ouverte:
@@ -60,20 +66,17 @@ def controle_porte(porte_ouverte):
 
 #========================================== Fonctions du moteur (refroidissement) ==========================================
 
-# Fonction qui permet de verifier quand verifier.
-def verification_refroidissement(temp):
-    # Si la temperature est sous 10 degré, 
-    if temp > 10:
-        # Commence le refroidissement.
-        return refroidissement(temp)
-
-# Fonction qui refroidis le frigo jusqu'a 9 degré.
+# Vérifie si le frigo est assé froid.
 def refroidissement(temp):
-    if temp > 9:
-        relais_moteur.value = True
-    else:
-        relais_moteur.value = False
-
+    # donne une valeur de 0 a 1 selon la temperature 
+    val_moteur = (temp - 5) /5
+    #s'assure que la valeur soit entre 0 et 1
+    if val_moteur < 0
+        val_moteur = 0
+    elif val_moteur > 1
+        val_moteur = 1
+    moteur.throttle = val_moteur
+    return val_moteur * 100
 
 #========================================== Fonctions du reservoir ==========================================
 def pourcent_capt(val_capt):
@@ -94,7 +97,7 @@ def remplir_reservoir(pourcent_capt):
 #========================================== Fonctions de l'affichage ==========================================
 
 # Fonction qui affiche les information a l'écran
-def affichage(temp, ):
+def affichage(temp):
     pass
 
 
