@@ -35,9 +35,9 @@ capteur_eau = analogio.AnalogIn(board.D5)
 pin_buzzer = board.D13
 
 # Déclarer moteur DC
-pwm_pompe1 = pwmio.PWMOut(board.A0)
-pwm_pompe2 = pwmio.PWMOut(board.A1)
-Pompe = motor.DCMotor(pwm_pompe1, pwm_pompe2)
+pwm_moteur1 = pwmio.PWMOut(board.A0)
+pwm_moteur2 = pwmio.PWMOut(board.A1)
+Pompe = motor.DCMotor(pwm_moteur1, pwm_moteur2)
 Pompe.throttle = 0
 
 # Déclaration de la del
