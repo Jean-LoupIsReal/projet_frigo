@@ -19,7 +19,7 @@ def boucle_principale():
         Del.value = switch.value()
         
         # Vérifie si le frigot doit etre refroidi
-        verification_refroidissement(temperature)
+        pourcent_moteur = refroidissement(temperature)
         
         # Quand on lache le bouton,
         if val_bouton == 0 and val_bouton_dernere_boucle == 1:
@@ -36,7 +36,7 @@ def boucle_principale():
         
         
         # Affichage : Entrée = temperature, niveau d'eau ; Sortie = moteur, nb d'ouverture de porte.
-        affichage(temperature)
+        affichage(temperature, pourcent_moteur)
         
         # Envois des information par Wi-Fi.
         envoisWifi(temperature)
