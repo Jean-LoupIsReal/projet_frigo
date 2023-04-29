@@ -82,17 +82,21 @@ def refroidissement(temp):
 #========================================== Fonctions du reservoir ==========================================
 def pourcent_capt(val_capt):
     # Normaliser en % la valeur du capteur
-    pass
+    pourcent_eau = (val_capt - 15000)/12500 * 100
+    if pourcent_eau < 0:
+        pourcent_eau = 0
+    elif pourcent_eau > 100:
+        pourcent_eau = 100
+    return pourcent_eau
     
 
 # Utilise la pompe pour remplir le reservoir d'eau jusqu'à 100%.
 def remplir_reservoir(pourcent_capt):
     # Tant qu'elle n'arrive pas 100%, continuer de remplir le reservoir 
     if pourcent_capt < 100:
-        #
-        pass
+        pompe.value = True
     else:
-        pass
+        pompe.value = false
 
 
 #========================================== Fonctions de l'affichage ==========================================
