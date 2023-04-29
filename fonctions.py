@@ -47,8 +47,7 @@ def spray_legumes():
 
 # Ouvre la porte du frigot.
 def ouverture_porte():
-    porte.angle = 120
-    music_zelda()
+    porte.angle = 120
     
     
 # Ferme la porte du frigot.
@@ -60,6 +59,7 @@ def controle_porte(porte_ouverte):
     #Transforme l'ouverture de la porte en bool
     if porte_ouverte:
         ouverture_porte()
+        music_zelda()
     else:
         fermeture_porte()
 
