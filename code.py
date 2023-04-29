@@ -32,7 +32,7 @@ def boucle_principale():
         # Vérifie le niveau d'eau dans le reservoire
         pass
         
-        # Vérifie si l'humiditée des légumes sont bonnes
+        # Vérifie si l'humiditée des légumes est bonne
         
         
         # Affichage : Entrée = temperature, niveau d'eau ; Sortie = moteur, nb d'ouverture de porte.
