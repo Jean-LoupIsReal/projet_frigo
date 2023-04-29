@@ -47,7 +47,8 @@ def spray_legumes():
 
 # Ouvre la porte du frigot.
 def ouverture_porte():
-    porte.angle = 120
+    porte.angle = 120
+
     
     
 # Ferme la porte du frigot.
@@ -71,9 +72,9 @@ def refroidissement(temp):
     # donne une valeur de 0 a 1 selon la temperature 
     val_moteur = (temp - 5) /5
     #s'assure que la valeur soit entre 0 et 1
-    if val_moteur < 0
+    if val_moteur < 0 :
         val_moteur = 0
-    elif val_moteur > 1
+    elif val_moteur > 1 :
         val_moteur = 1
     moteur.throttle = val_moteur
     return val_moteur * 100
