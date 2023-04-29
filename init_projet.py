@@ -47,6 +47,7 @@ Del.Direction = Direction.OUTPUT
 # Déclaration de la pompe
 pompe = DigitalInOut(board.A3)
 pompe.Direction = Direction.OUTPUT
+pompe.value = False
 
 # Déclaration du servomoteurs
 servo_pwm = pwmio.PWMOut(board.A4, duty_cycle=2 ** 15, frequency=50)
