@@ -39,8 +39,7 @@ bouton.pull = Pull.DOWN
 dht = adafruit_dht.DHT11(board.D10)
 
 # Déclaration du capteur d'eau
-# capteur_eau = analogio.AnalogIn(board.D5)
-
+capteur_eau = analogio.AnalogIn(board.D12)
 
 #========================================== Déclaration des actuateurs ==========================================
 

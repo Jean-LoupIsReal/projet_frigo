@@ -9,17 +9,20 @@ def boucle_principale():
     val_bouton_dernere_boucle = 0
     nb_ouverture = 0
     porte_ouverte = False
-    remplissage = False
+    led.color = (255,255,255)
+    timer_spray = time.monotonic()
+    pompe.value = False
     
 
     while True:
         # Déclare les variables pour la boucle
-        temperature = dht.temperature
-        humidite = dht.humidity
-        val_bouton = bouton.value
+        try:
+            temperature = dht.temperature
+            humidite = dht.humidity
+        except(RuntimeError):
+            pass
         
-        # Allume ou eteindre la lumière
-        led.value = switch.value()
+        val_bouton = bouton.value
 
         # Vérifie si le frigot doit etre refroidi
         pourcent_moteur = refroidissement(temperature)
@@ -36,17 +39,20 @@ def boucle_principale():
         reservoir = pourcent_capt(capteur_eau.value)
         
         #Vérifie si le reservoir est vide
-        if reservoir == 0
+        if reservoir == 0:
             # Active le remplissage
             remplissage = True
         
-        if remplissage
+        if remplissage:
             #Rempli le reservoir
             remplissage = remplir_reservoir(reservoir, remplissage)
         
     
         # Vérifie si l'humiditée des légumes est bonne
-        verification_humidite(humidite)
+        if timer_spray + 10 <= time.monotonic():
+            verification_humidite(humidite)
+            timer_spray = time.monotonic()
+
         
         # Affichage : Entrée = temperature, niveau d'eau ; Sortie = moteur, nb d'ouverture de porte.
         affichage(temperature, pourcent_moteur)
