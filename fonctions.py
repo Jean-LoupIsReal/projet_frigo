@@ -1,4 +1,5 @@
 from init_projet import *
+
 #========================================== Fonction du wifi ==========================================
 
 # Fonction qui gère l'envois de l'information à internet
@@ -47,9 +48,8 @@ def spray_legumes():
 # Ouvre la porte du frigo.
 def ouverture_porte():
     porte.angle = 120
-    
-    
-# Ferme la porte du frigo.
+
+# Ferme la porte du frigot.
 def fermeture_porte():
     porte.angle = 0
     
@@ -63,7 +63,6 @@ def controle_porte(porte_ouverte):
     else:
         fermeture_porte()
         led.color = (255,255,255)
-
 
 #========================================== Fonctions du moteur (refroidissement) ==========================================
 
@@ -82,24 +81,25 @@ def refroidissement(temp):
 #========================================== Fonctions du reservoir ==========================================
 def pourcent_capt(val_capt):
     # Normaliser en % la valeur du capteur
-    pass
-    
+    pourcent_eau = (val_capt - 15000)/12500 * 100
+    if pourcent_eau < 0:
+        pourcent_eau = 0
+    elif pourcent_eau > 100:
+        pourcent_eau = 100
+    return pourcent_eau  
 
 # Utilise la pompe pour remplir le reservoir d'eau jusqu'à 100%.
 def remplir_reservoir(pourcent_capt):
     # Tant qu'elle n'arrive pas 100%, continuer de remplir le reservoir 
     if pourcent_capt < 100:
-        #
-        pass
+        pompe.value = True
+        return True
     else:
-        pass
-
+        pompe.value = False
+        return False
 
 #========================================== Fonctions de l'affichage ==========================================
 
 # Fonction qui affiche les information a l'écran
 def affichage(temp, temps):
     pass
-
-
-#========================================== Fonctions bonus ==========================================

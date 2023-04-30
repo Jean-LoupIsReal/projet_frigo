@@ -9,6 +9,8 @@ def boucle_principale():
     val_bouton_dernere_boucle = 0
     nb_ouverture = 0
     porte_ouverte = False
+    remplissage = False
+    
 
     while True:
         # Déclare les variables pour la boucle
@@ -31,7 +33,16 @@ def boucle_principale():
             controle_porte(porte_ouverte)
         
         # Vérifie le niveau d'eau dans le reservoire
-        pass
+        reservoir = pourcent_capt(capteur_eau.value)
+        
+        #Vérifie si le reservoir est vide
+        if reservoir == 0
+            # Active le remplissage
+            remplissage = True
+        
+        if remplissage
+            #Rempli le reservoir
+            remplissage = remplir_reservoir(reservoir, remplissage)
         
     
         # Vérifie si l'humiditée des légumes est bonne
