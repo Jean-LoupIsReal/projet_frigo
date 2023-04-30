@@ -3,22 +3,24 @@
 from init_projet import *
 from fonctions import *
 
-    
 # Fonction de la boucle principale.
 def boucle_principale():
     # Déclare les variables necessaire a la boucle.
     val_bouton_dernere_boucle = 0
     nb_ouverture = 0
+    porte_ouverte = False
     remplissage = False
+    
+
     while True:
         # Déclare les variables pour la boucle
         temperature = dht.temperature
-        humidite = dhtDevice.humidity
+        humidite = dht.humidity
         val_bouton = bouton.value
         
         # Allume ou eteindre la lumière
-        Del.value = switch.value()
-        
+        led.value = switch.value()
+
         # Vérifie si le frigot doit etre refroidi
         pourcent_moteur = refroidissement(temperature)
         
@@ -42,8 +44,9 @@ def boucle_principale():
             #Rempli le reservoir
             remplissage = remplir_reservoir(reservoir, remplissage)
         
+    
         # Vérifie si l'humiditée des légumes est bonne
-        verification_humidite()
+        verification_humidite(humidite)
         
         # Affichage : Entrée = temperature, niveau d'eau ; Sortie = moteur, nb d'ouverture de porte.
         affichage(temperature, pourcent_moteur)
@@ -57,3 +60,6 @@ def boucle_principale():
         # empeche de bruler l'esp
         time.sleep(0.1)
 
+while True:
+
+    boucle_principale()

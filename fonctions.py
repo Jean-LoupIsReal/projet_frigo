@@ -1,5 +1,5 @@
 from init_projet import *
-import simpleio
+
 #========================================== Fonction du wifi ==========================================
 
 # Fonction qui gère l'envois de l'information à internet
@@ -45,12 +45,10 @@ def spray_legumes():
         
 #========================================== Fonctions de la porte ==========================================
 
-# Ouvre la porte du frigot.
+# Ouvre la porte du frigo.
 def ouverture_porte():
     porte.angle = 120
 
-    
-    
 # Ferme la porte du frigot.
 def fermeture_porte():
     porte.angle = 0
@@ -60,10 +58,11 @@ def controle_porte(porte_ouverte):
     #Transforme l'ouverture de la porte en bool
     if porte_ouverte:
         ouverture_porte()
+        led.color = (0,0,0)
         music_zelda()
     else:
         fermeture_porte()
-
+        led.color = (255,255,255)
 
 #========================================== Fonctions du moteur (refroidissement) ==========================================
 
@@ -87,8 +86,7 @@ def pourcent_capt(val_capt):
         pourcent_eau = 0
     elif pourcent_eau > 100:
         pourcent_eau = 100
-    return pourcent_eau
-    
+    return pourcent_eau  
 
 # Utilise la pompe pour remplir le reservoir d'eau jusqu'à 100%.
 def remplir_reservoir(pourcent_capt):
@@ -99,14 +97,9 @@ def remplir_reservoir(pourcent_capt):
     else:
         pompe.value = False
         return False
-        
-
 
 #========================================== Fonctions de l'affichage ==========================================
 
 # Fonction qui affiche les information a l'écran
-def affichage(temp):
+def affichage(temp, temps):
     pass
-
-
-#========================================== Fonctions bonus ==========================================
