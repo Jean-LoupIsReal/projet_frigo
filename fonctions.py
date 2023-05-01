@@ -60,11 +60,17 @@ def controle_porte(porte_ouverte):
     #Transforme l'ouverture de la porte en bool
     if porte_ouverte:
         ouverture_porte()
+        # Allume la lumière
         led.color = (0,0,0)
         music_zelda()
+        # Retoune une valeur pour compter le nombre d'ouverture.
+        return 1
     else:
         fermeture_porte()
+        # Ferme la lumière.
         led.color = (255,255,255)
+        # Retoune une valeur pour compter le nombre d'ouverture.
+        return 0
 
 #========================================== Fonctions du moteur (refroidissement) ==========================================
 
