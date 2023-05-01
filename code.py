@@ -11,6 +11,7 @@ def boucle_principale():
     porte_ouverte = False
     led.color = (255,255,255)
     timer_spray = time.monotonic()
+    timer_affichage = time.monotonic()
     pompe.value = False
     
 
@@ -55,7 +56,8 @@ def boucle_principale():
 
         
         # Affichage : Entrée = temperature, niveau d'eau ; Sortie = moteur, nb d'ouverture de porte.
-        affichage(temperature, pourcent_moteur)
+        if timer_affichage + 0.1 <= time.monotonic():
+            affichage(temperature, pourcent_moteur, nb_ouverture, reservoir)
         
         # Envois des information par Wi-Fi.
         envoisWifi(temperature)
@@ -64,7 +66,7 @@ def boucle_principale():
         val_bouton_dernere_boucle = val_bouton
         
         # empeche de bruler l'esp
-        time.sleep(0.1)
+        time.sleep(0.01)
 
 while True:
 
