@@ -30,11 +30,9 @@ def boucle_principale():
         
         # Quand on lache le bouton,
         if val_bouton == 0 and val_bouton_dernere_boucle == 1:
-            #compte le nombre d'ouverture de la porte
-            nb_ouverture += 1
             porte_ouverte = not porte_ouverte
-            # Ouvre/ferme la porte
-            controle_porte(porte_ouverte)
+            # Ouvre/ferme la porte et compte le nombre d'ouverture de la porte
+            nb_ouverture += controle_porte(porte_ouverte)
         
         # Vérifie le niveau d'eau dans le reservoire
         reservoir = pourcent_capt(capteur_eau.value)
@@ -60,7 +58,7 @@ def boucle_principale():
             affichage(temperature, pourcent_moteur, nb_ouverture, reservoir)
         
         # Envois des information par Wi-Fi.
-        envoisWifi(temperature)
+        #envoisWifi(temperature)
         
         # Garde en memoire la valeur du bouton 
         val_bouton_dernere_boucle = val_bouton
