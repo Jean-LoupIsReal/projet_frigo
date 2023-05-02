@@ -32,12 +32,12 @@ def music_zelda():
     for i in range(len(melodie)):
         simpleio.tone(pin_buzzer, melodie[i], duration=0.15)
         
-# Vérifie si l'on doit arroser les légumes.
+# Vérifie si l'on doit arroser les fruits et les légumes.
 def verification_humidite(humidite):
     if humidite < 55:
                 spray_legumes()
                 
-# Arrose les fruit et les légumes. (buzzer pour simulation)
+# Arrose les fruits et les légumes. (buzzer pour simulation)
 def spray_legumes():
         simpleio.tone(pin_buzzer, 349, duration=0.15)
         
