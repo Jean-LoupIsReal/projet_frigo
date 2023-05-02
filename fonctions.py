@@ -16,7 +16,6 @@ def envoisWifi(temp):
             print("probleme wifi")
         timerWifi = time.monotonic()
 
-
 #========================================== Fonctions du buzzer (spray) ==========================================
 # Déclanche la musique de zelda.
 def music_zelda():
@@ -66,7 +65,7 @@ def controle_porte(porte_ouverte):
 
 #========================================== Fonctions du moteur (refroidissement) ==========================================
 
-# Vérifie si le frigo est assé froid.
+# Vérifie si le frigo est assez froid.
 def refroidissement(temp):
     # donne une valeur de 0 a 1 selon la temperature 
     val_moteur = (temp - 5) /5

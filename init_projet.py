@@ -63,14 +63,14 @@ led = adafruit_rgbled.RGBLED(RED_PIN, GREEN_PIN,BLUE_PIN)
 # pompe = DigitalInOut(board.A3)
 # pompe.direction = Direction.OUTPUT
 
-# Déclaration du servomoteurs
+# Déclaration du servomoteur
 servo_pwm = pwmio.PWMOut(board.A1, duty_cycle=2 ** 15, frequency=50)
 porte = servo.Servo(servo_pwm, min_pulse=500, max_pulse= 2500)
 porte.angle = 0
 
 #========================================== Gestion du wifi ==========================================
 
-timerWifi = time.monotonic()
+# timerWifi = time.monotonic()
 
 key = "O1MV7NRO1B07USO7"
 URL = "https://api.thingspeak.com/update.json"

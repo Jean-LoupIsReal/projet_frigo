@@ -13,7 +13,6 @@ def boucle_principale():
     timer_spray = time.monotonic()
     pompe.value = False
     
-
     while True:
         # Déclare les variables pour la boucle
         try:
