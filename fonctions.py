@@ -32,13 +32,12 @@ def music_zelda():
     for i in range(len(melodie)):
         simpleio.tone(pin_buzzer, melodie[i], duration=0.15)
         
-# Vérifie si l'on doit aroser les légumes.
+# Vérifie si l'on doit arroser les légumes.
 def verification_humidite(humidite):
     if humidite < 55:
-                # Arose les légumes. (buzzer pour simulation)
                 spray_legumes()
                 
-# Arose les légumes. (simuler par buzzer)
+# Arrose les fruit et les légumes. (buzzer pour simulation)
 def spray_legumes():
         simpleio.tone(pin_buzzer, 349, duration=0.15)
         
@@ -72,11 +71,11 @@ def controle_porte(porte_ouverte):
 
 #========================================== Fonctions du moteur (refroidissement) ==========================================
 
-# Vérifie si le frigo est assé froid.
+# Vérifie si le frigo est assez froid.
 def refroidissement(temp):
-    # donne une valeur de 0 a 1 selon la temperature 
+    # Donne une valeur de 0 a 1 selon la temperature 
     val_moteur = (temp - 5) /5
-    #s'assure que la valeur soit entre 0 et 1
+    # S'assure que la valeur soit entre 0 et 1
     if val_moteur < 0:
         val_moteur = 0
     elif val_moteur > 1:
