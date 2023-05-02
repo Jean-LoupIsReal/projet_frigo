@@ -23,6 +23,10 @@ from adafruit_motor import servo, motor
 import simpleio
 import adafruit_rgbled
 
+# Affichage
+import terminalio
+from adafruit_display_text import bitmap_label
+
 #========================================== Déclaration des capteurs ==========================================
 
 # Déclaration de la switch
@@ -78,4 +82,12 @@ URL = "https://api.thingspeak.com/update.json"
 socket = socketpool.SocketPool(wifi.radio)
 context = ssl.create_default_context()
 https = adafruit_requests.Session(socket, context)
+
+#========================================== Déclaration pour l'affichage ==========================================
+
+text_area = bitmap_label.Label(terminalio.FONT, text=text, scale=scale)
+text_area.x = 10
+text_area.y = 10
+board.DISPLAY.show(text_area)
+
 
