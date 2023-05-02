@@ -27,12 +27,13 @@ import adafruit_rgbled
 import terminalio
 from adafruit_display_text import bitmap_label
 
+
 #========================================== Déclaration des capteurs ==========================================
 
 # Déclaration de la switch
-# switch = DigitalInOut(board.D13)
-# switch.direction = Direction.INPUT
-# switch.pull = Pull.DOWN
+switch = DigitalInOut(board.D13)
+switch.direction = Direction.INPUT
+switch.pull = Pull.DOWN
 
 # Déclaration du bouton
 bouton = DigitalInOut(board.A0)
@@ -44,6 +45,7 @@ dht = adafruit_dht.DHT11(board.D10)
 
 # Déclaration du capteur d'eau
 capteur_eau = analogio.AnalogIn(board.D12)
+
 
 #========================================== Déclaration des actuateurs ==========================================
 
@@ -91,3 +93,13 @@ text_area = bitmap_label.Label(terminalio.FONT, text=text, scale=scale)
 text_area.x = 50
 text_area.y = 60
 board.DISPLAY.show(text_area)
+
+#========================================== Tests ==========================================
+
+# Potentiometre
+potentiometre = analogio.AnalogIn(board.A5)
+
+# Donne une valeur de temperature set avec le potentiometre
+def test_temperature():
+    temp = round((potentiometre.value-500) / 50000 * 16, 1)
+    return temp
