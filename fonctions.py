@@ -1,6 +1,4 @@
 from init_projet import *
-import terminalio
-from adafruit_display_text import bitmap_label
 
 #========================================== Fonction du wifi ==========================================
 
