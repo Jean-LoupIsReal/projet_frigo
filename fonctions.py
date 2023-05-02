@@ -110,6 +110,6 @@ def affichage(temp, moteur, nb_ouverture, reservoir):
     text = "Temperature = {0} \nMoteur = {1} \nNb ouverture = {2} \nReservoir = {3}".format(temp, moteur, nb_ouverture, reservoir)
     text_area = bitmap_label.Label(terminalio.FONT, text=text, scale=2)
     text_area.x = 10
-    text_area.y = 10
+    text_area.y = 20
     board.DISPLAY.show(text_area)
 
