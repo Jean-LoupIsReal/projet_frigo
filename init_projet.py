@@ -64,8 +64,8 @@ BLUE_PIN = board.D5
 led = adafruit_rgbled.RGBLED(RED_PIN, GREEN_PIN,BLUE_PIN)
 
 # Déclaration de la pompe
-# pompe = DigitalInOut(board.A3)
-# pompe.direction = Direction.OUTPUT
+pompe = DigitalInOut(board.A4)
+pompe.direction = Direction.OUTPUT
 
 # Déclaration du servomoteurs
 servo_pwm = pwmio.PWMOut(board.A1, duty_cycle=2 ** 15, frequency=50)
