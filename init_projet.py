@@ -1,12 +1,12 @@
 # pyright: reportShadowedImports=false
 #========================================== Déclaration des imports ==========================================
-# Import pour la connexion
+# Connexion
 import ssl
 import wifi
 import socketpool
 import adafruit_requests
 
-# Import pour la mort de JL
+# Board & général
 import time
 import board
 import analogio
