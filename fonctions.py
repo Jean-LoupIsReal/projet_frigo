@@ -1,20 +1,35 @@
 from init_projet import *
 
-#========================================== Fonction du wifi ==========================================
+#========================================== Fonction recevoir/envoie de donnée ==========================================
 
-# Fonction qui gère l'envois de l'information à internet
-def envoisWifi(temp):
-    global timerWifi
-    if timerWifi + 5 <= time.monotonic():
-        json_data = {
-            "api_key" : key,
-            "field1": temp
-        }
-        try:
-            response = https.post(URL, json = json_data)
-        except:
-            print("probleme wifi")
-        timerWifi = time.monotonic()
+# Fonction qui envoie les données sur Adafruit IO
+def envoi_donnee(temps, hum, moteur, porte, led, reservoir):
+
+    try:
+        io.send_data(io.create_and_get_feed("temperature")["key"], temps)
+        io.send_data(io.create_and_get_feed("humidite")["key"], hum)
+        io.send_data(io.create_and_get_feed("moteur")["key"], moteur)
+        io.send_data(io.create_and_get_feed("porte")["key"], porte)
+        io.send_data(io.create_and_get_feed("led-frigidaire")["key"], led)
+        io.send_data(io.create_and_get_feed("reservoir")["key"], reservoir)
+
+    except RuntimeError:
+        print("Erreur d'envoie de donnée")
+
+# Fonction qui recoie les données d'Adafruit IO
+def reception_donnee(porte, spray, remplir):
+    
+    # Reception des données d'Adafruit IO
+    io.receive_data("controle.porte"["key"], porte)
+    io.receive_data("controle.spray"["key"], spray)
+    io.receive_data(("controle.remplir")["key"], remplir)
+
+    # Prend la donnée qu'on a besoin (TEST)
+    print(io.receive_data("controle.porte"["key"], porte))
+
+    # Donnée pour remettre les bouton de controle d'Adafruit IO à 0
+    io.send_data(io.create_and_get_feed("controle.spray")["key"], spray)
+    io.send_data(io.create_and_get_feed("controle.remplir")["key"], remplir)
 
 #========================================== Fonctions du buzzer (spray) ==========================================
 # Déclanche la musique de zelda.
@@ -31,13 +46,12 @@ def music_zelda():
     for i in range(len(melodie)):
         simpleio.tone(pin_buzzer, melodie[i], duration=0.15)
         
-# Vérifie si l'on doit aroser les légumes.
+# Vérifie si l'on doit arroser les fruits et les légumes.
 def verification_humidite(humidite):
     if humidite < 55:
-                # Arose les légumes. (buzzer pour simulation)
                 spray_legumes()
                 
-# Arose les légumes. (simuler par buzzer)
+# Arrose les fruits et les légumes. (buzzer pour simulation)
 def spray_legumes():
         simpleio.tone(pin_buzzer, 349, duration=0.15)
         
@@ -57,19 +71,25 @@ def controle_porte(porte_ouverte):
     #Transforme l'ouverture de la porte en bool
     if porte_ouverte:
         ouverture_porte()
+        # Allume la lumière
         led.color = (0,0,0)
         music_zelda()
+        # Retoune une valeur pour compter le nombre d'ouverture.
+        return 1
     else:
         fermeture_porte()
+        # Ferme la lumière.
         led.color = (255,255,255)
+        # Retoune une valeur pour compter le nombre d'ouverture.
+        return 0
 
 #========================================== Fonctions du moteur (refroidissement) ==========================================
 
 # Vérifie si le frigo est assez froid.
 def refroidissement(temp):
-    # donne une valeur de 0 a 1 selon la temperature 
+    # Donne une valeur de 0 a 1 selon la temperature 
     val_moteur = (temp - 5) /5
-    #s'assure que la valeur soit entre 0 et 1
+    # S'assure que la valeur soit entre 0 et 1
     if val_moteur < 0:
         val_moteur = 0
     elif val_moteur > 1:
@@ -100,5 +120,9 @@ def remplir_reservoir(pourcent_capt):
 #========================================== Fonctions de l'affichage ==========================================
 
 # Fonction qui affiche les information a l'écran
-def affichage(temp, temps):
-    pass
+def affichage(temp, hum, moteur, nb_ouverture, reservoir):
+    text = "Temperature = {0} \nHumidité = {1} \nMoteur = {2} \nNb ouverture = {3} \nReservoir = {4}".format(temp, hum, moteur, nb_ouverture, reservoir)
+    text_area = bitmap_label.Label(terminalio.FONT, text=text, scale=2)
+    text_area.x = 10
+    text_area.y = 7
+    board.DISPLAY.show(text_area)

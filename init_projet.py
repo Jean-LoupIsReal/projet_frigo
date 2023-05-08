@@ -1,12 +1,13 @@
 # pyright: reportShadowedImports=false
 #========================================== Déclaration des imports ==========================================
-# Import pour la connexion
+# Connexion
 import ssl
 import wifi
 import socketpool
 import adafruit_requests
+from adafruit_io.adafruit_io import IO_HTTP
 
-# Import pour la mort de JL
+# Board & général
 import time
 import board
 import analogio
@@ -23,12 +24,16 @@ from adafruit_motor import servo, motor
 import simpleio
 import adafruit_rgbled
 
+# Affichage
+import terminalio
+from adafruit_display_text import bitmap_label
+
 #========================================== Déclaration des capteurs ==========================================
 
 # Déclaration de la switch
-# switch = DigitalInOut(board.D13)
-# switch.direction = Direction.INPUT
-# switch.pull = Pull.DOWN
+switch = DigitalInOut(board.D13)
+switch.direction = Direction.INPUT
+switch.pull = Pull.DOWN
 
 # Déclaration du bouton
 bouton = DigitalInOut(board.A0)
@@ -60,22 +65,42 @@ BLUE_PIN = board.D5
 led = adafruit_rgbled.RGBLED(RED_PIN, GREEN_PIN,BLUE_PIN)
 
 # Déclaration de la pompe
-# pompe = DigitalInOut(board.A3)
-# pompe.direction = Direction.OUTPUT
+pompe = DigitalInOut(board.A4)
+pompe.direction = Direction.OUTPUT
+pompe.value = False
 
-# Déclaration du servomoteur
+# Déclaration du servomoteurs
 servo_pwm = pwmio.PWMOut(board.A1, duty_cycle=2 ** 15, frequency=50)
 porte = servo.Servo(servo_pwm, min_pulse=500, max_pulse= 2500)
 porte.angle = 0
 
 #========================================== Gestion du wifi ==========================================
 
-# timerWifi = time.monotonic()
+timerWifi = time.monotonic()
 
-key = "O1MV7NRO1B07USO7"
-URL = "https://api.thingspeak.com/update.json"
+name = "DydyKH"
+KEY = "aio_AHqe74i2P6CwqF0kOoQ68xgLAhrV"
 
 socket = socketpool.SocketPool(wifi.radio)
 context = ssl.create_default_context()
 https = adafruit_requests.Session(socket, context)
 
+io = IO_HTTP(name, KEY, https)
+
+#========================================== Déclaration pour l'affichage ==========================================
+text = "Hello"
+scale = 5
+text_area = bitmap_label.Label(terminalio.FONT, text=text, scale=scale)
+text_area.x = 50
+text_area.y = 60
+board.DISPLAY.show(text_area)
+
+#========================================== Tests ==========================================
+
+# Potentiometre
+potentiometre = analogio.AnalogIn(board.A5)
+
+# Donne une valeur de temperature set avec le potentiometre
+def test_temperature():
+    temp = round((potentiometre.value-500) / 50000 * 16, 1)
+    return temp
