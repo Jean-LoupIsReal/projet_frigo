@@ -66,7 +66,7 @@ def boucle_principale():
         
         # Vérifie si l'humidité est bonne
         if timer_spray + 10 <= time.monotonic():
-            verification_humidite(humidite,spray_distance)
+            verification_humidite(humidite)
             timer_spray = time.monotonic()
         
         # Affichage : Entrée = temperature, niveau d'eau ; Sortie = moteur, nb d'ouverture de porte.
