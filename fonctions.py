@@ -52,7 +52,7 @@ def music_zelda():
         simpleio.tone(pin_buzzer, melodie[i], duration=0.15)
         
 # Vérifie si l'on doit arroser les fruits et les légumes.
-def verification_humidite(humidite, spray_distance):
+def verification_humidite(humidite):
     if humidite < 55:
                 spray_legumes()
                 
