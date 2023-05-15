@@ -38,7 +38,7 @@ switch.pull = Pull.DOWN
 # Déclaration du bouton
 bouton = DigitalInOut(board.A0)
 bouton.direction = Direction.INPUT
-bouton.pull = Pull.DOWN
+bouton.pull = Pull.UP
 
 # Initial the dht device, with data pin connected to:
 dht = adafruit_dht.DHT11(board.D10)
@@ -62,7 +62,7 @@ RED_PIN = board.D9
 GREEN_PIN = board.D6
 BLUE_PIN = board.D5
 
-led = adafruit_rgbled.RGBLED(RED_PIN, GREEN_PIN,BLUE_PIN)
+led = adafruit_rgbled.RGBLED(RED_PIN,GREEN_PIN,BLUE_PIN)
 
 # Déclaration de la pompe
 pompe = DigitalInOut(board.A4)
@@ -72,14 +72,12 @@ pompe.value = False
 # Déclaration du servomoteurs
 servo_pwm = pwmio.PWMOut(board.A1, duty_cycle=2 ** 15, frequency=50)
 porte = servo.Servo(servo_pwm, min_pulse=500, max_pulse= 2500)
-porte.angle = 0
+porte.angle = 100
 
 #========================================== Gestion du wifi ==========================================
 
-timerWifi = time.monotonic()
-
 name = "DydyKH"
-KEY = "aio_AHqe74i2P6CwqF0kOoQ68xgLAhrV"
+KEY = "aio_Ejhc87Almr3qizVq2JZjxswfuTMB"
 
 socket = socketpool.SocketPool(wifi.radio)
 context = ssl.create_default_context()

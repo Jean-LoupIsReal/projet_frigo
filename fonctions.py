@@ -12,24 +12,29 @@ def envoi_donnee(temps, hum, moteur, porte, led, reservoir):
         io.send_data(io.create_and_get_feed("porte")["key"], porte)
         io.send_data(io.create_and_get_feed("led-frigidaire")["key"], led)
         io.send_data(io.create_and_get_feed("reservoir")["key"], reservoir)
-
     except RuntimeError:
         print("Erreur d'envoie de donnée")
 
 # Fonction qui recoie les données d'Adafruit IO
-def reception_donnee(porte, spray, remplir):
+
+def reception_donnee():
     
     # Reception des données d'Adafruit IO
-    io.receive_data("controle.porte"["key"], porte)
-    io.receive_data("controle.spray"["key"], spray)
-    io.receive_data(("controle.remplir")["key"], remplir)
+    # Récupere la valeur de la porte
+    porte = io.receive_data("controle.porte")
+    porte_distance = int(porte['value'])
 
-    # Prend la donnée qu'on a besoin (TEST)
-    print(io.receive_data("controle.porte"["key"], porte))
+    # Récupere la valeur du spray
+    spray = io.receive_data("controle.spray")
+    spray_distance = int(spray['value'])
+    if spray_distance == 1:
+        spray_legumes()
 
-    # Donnée pour remettre les bouton de controle d'Adafruit IO à 0
-    io.send_data(io.create_and_get_feed("controle.spray")["key"], spray)
-    io.send_data(io.create_and_get_feed("controle.remplir")["key"], remplir)
+    # Récupere la valeur pour remplir
+    remplissage = io.receive_data("controle.remplir")
+    remplissage_distance = int(remplissage['value'])
+         
+    return porte_distance, spray_distance, remplissage_distance
 
 #========================================== Fonctions du buzzer (spray) ==========================================
 # Déclanche la musique de zelda.
@@ -47,7 +52,7 @@ def music_zelda():
         simpleio.tone(pin_buzzer, melodie[i], duration=0.15)
         
 # Vérifie si l'on doit arroser les fruits et les légumes.
-def verification_humidite(humidite):
+def verification_humidite(humidite, spray_distance):
     if humidite < 55:
                 spray_legumes()
                 
@@ -60,11 +65,11 @@ def spray_legumes():
 
 # Ouvre la porte du frigo.
 def ouverture_porte():
-    porte.angle = 120
-
-# Ferme la porte du frigot.
-def fermeture_porte():
     porte.angle = 0
+
+# Ferme la porte du frigo.
+def fermeture_porte():
+    porte.angle = 100
     
 # Controle de la porte
 def controle_porte(porte_ouverte):

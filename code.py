@@ -12,11 +12,17 @@ def boucle_principale():
     led.color = (255,255,255)
     led_porte = 0
     remplissage = False
+
+    # Timer pour les differente fonctions
     timer_spray = time.monotonic()
     timer_affichage = time.monotonic()
     timer_envoie = time.monotonic()
     
     while True:
+
+        # variable pour les données reçu
+        porte_distance, spray_distance, remplissage_distance = reception_donnee()
+
         # Déclare les variables pour la boucle
         interrupteur = switch.value
         try:
@@ -27,14 +33,16 @@ def boucle_principale():
             humidite = dht.humidity
         except(RuntimeError):
             pass
-        
+
         bouton_relache = bouton.value == 1 and val_bouton == 0
         val_bouton = bouton.value
+
         # Vérifie si le frigo doit etre refroidi
         pourcent_moteur = refroidissement(temperature)
-        
+        print(porte_distance)
+
         # Quand on lache le bouton,
-        if bouton_relache:
+        if bouton_relache or porte_distance != porte_ouverte:
             porte_ouverte = not porte_ouverte
             # Ouvre/ferme la porte et compte le nombre d'ouverture de la porte
             nb_ouverture += controle_porte(porte_ouverte)
@@ -43,41 +51,37 @@ def boucle_principale():
                 led_porte = 1
             else:
                 led_porte = 0
-
+    
         # Vérifie le niveau d'eau dans le reservoire
         reservoir = pourcent_capt(capteur_eau.value)
        
         #Vérifie si le reservoir est vide
-        if reservoir == 0:
+        if reservoir == 0 or remplissage_distance == 1:
             # Active le remplissage
             remplissage = True
-        
+
         if remplissage:
             # Rempli le reservoir
             remplissage = remplir_reservoir(reservoir)
         
         # Vérifie si l'humidité est bonne
         if timer_spray + 10 <= time.monotonic():
-            verification_humidite(humidite)
+            verification_humidite(humidite,spray_distance)
             timer_spray = time.monotonic()
-
         
         # Affichage : Entrée = temperature, niveau d'eau ; Sortie = moteur, nb d'ouverture de porte.
         if timer_affichage + 0.1 <= time.monotonic():
-            print(switch.value)
+            # print(switch.value)
             timer_affichage = time.monotonic()
             affichage(temperature, humidite, pourcent_moteur, nb_ouverture, reservoir)
         
         # Envoie des données vers Adafruit IO
-        if timer_envoie + 15 <= time.monotonic():
+        if timer_envoie + 30 <= time.monotonic():
            envoi_donnee(temperature, humidite, pourcent_moteur, nb_ouverture, led_porte, reservoir)
-           timer_envoie = time.monotonic() 
-
-        # Recoit les données d'Adafruit IO
-            # reception_donnee()
+           timer_envoie = time.monotonic()
 
         # empeche de bruler l'esp
         time.sleep(0.01)
-        
+
 while True:
     boucle_principale()
